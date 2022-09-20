@@ -1,0 +1,45 @@
+---
+title: "p8105_hw1_qz2493.Rmd"
+author: "Qingyue Zhuo"
+date: "2022-09-20"
+output: html_document
+---
+how to submit?
+Problem 1
+The variables of the dataset are "species", "island" ,"bill_length_mm", "bill_depth_mm", "flipper_length_mm", "body_mass_g", sex", "year". For example, "species" has three levels: Adelie, Chinstrap, and Gentoo; "island" has three levels:  Biscoe, Dream and Torgersen.
+The dataset has 344 rows and 8 columns.
+The mean flipper length is 200.9152mm after excluding the missing value NAs.
+```{r}
+data("penguins", package = "palmerpenguins")
+names(penguins)
+levels(penguins$species)
+levels(penguins$island)
+nrow(penguins)
+ncol(penguins)
+mean(penguins$flipper_length_mm, na.rm = TRUE)
+
+plot(penguins$flipper_length_mm, penguins$bill_length_mm, main = "Penguins Scatterplot",
+   xlab = "flipper_length", ylab = "bill_length", col = penguins$species)
+
+library(tidyverse)
+ggsave("Penguins_scatter_plot.pdf")
+```
+
+Problem 2
+The mean of numeric and logical vectors work, while the mean for character and factor vectors do not work.
+```{r}
+
+hw2_df = tibble(
+  vec_numeric = rnorm(n = 10),
+  vec_logical = vec_numeric > 0,
+  vec_char = c('a','b','c','d','e','f','g','h','i','j'),
+  vec_factor = factor(c("tall", "grande", "venti", "tall", "grande", "venti", "tall", "grande", "venti", "tall" ))
+)
+
+mean(pull(hw2_df,vec_numeric))
+mean(pull(hw2_df,vec_logical))
+mean(pull(hw2_df,vec_char))
+mean(pull(hw2_df,vec_factor))
+
+```
+
