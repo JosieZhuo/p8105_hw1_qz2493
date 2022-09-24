@@ -13,27 +13,22 @@ library(ggplot2)
 
 Problem 1
 
-The variables of the data set are "species", "island" ,"bill_length_mm", "bill_depth_mm", "flipper_length_mm", "body_mass_g", "sex", "year"."species" has three levels: Adelie, Chinstrap, and Gentoo; "island" has three levels:  Biscoe, Dream and Torgersen; "sex" is a binary variable with two levels: male and female.
-The data set has 344 rows and 8 columns.
-The mean flipper length is 200.9152mm after excluding the missing value NAs.
-
 ```{r}
 data("penguins", package = "palmerpenguins")
-names(penguins)
-levels(penguins$species)
-levels(penguins$island)
-nrow(penguins)
-ncol(penguins)
-mean(penguins$flipper_length_mm, na.rm = TRUE)
+```
 
-ggplot(penguins, aes(x = flipper_length_mm, y = bill_length_mm, col = species)) + geom_point()
+The variables of the data set are `r names(penguins)`. "Species" has three levels:`r levels(penguins$island)` ; "island" has three levels:  `r levels(penguins$island)`; "sex" is a binary variable with two levels: `r levels(penguins$sex)`.
+The data set has `r nrow(penguins)` and `r ncol(penguins)` columns.
+The mean flipper length is `r round(mean(penguins$flipper_length_mm, na.rm = TRUE),2)` mm after excluding the missing value NAs.
+
+
+```{r}
+ggplot(penguins, aes(x = bill_length_mm, y = flipper_length_mm, col = species)) + geom_point()
 
 ggsave("Penguins_scatter_plot.pdf")
 ```
 
 Problem 2
-
-The mean of numeric and logical vectors work, while the mean for character and factor vectors do not work.
 
 ```{r}
 
@@ -51,3 +46,12 @@ mean(pull(hw2_df,vec_factor))
 
 ```
 
+The mean of numeric and logical vectors work, while the mean of character and factor vectors do not work.
+
+```{r eval = FALSE}
+as.numeric(pull(hw2_df,vec_logical))
+as.numeric(pull(hw2_df,vec_char))
+as.numeric(pull(hw2_df,vec_factor))
+```
+
+After applying the as.numeric function, the logical variable has two values 0 and 1; factor variable has three values 1, 2 and 3; while character variable turns into "NA"s. Logical variable only has two outcomes and can be counted as 0 and 1 in calculating mean. Factor variable is categorical variable, although it can be converted into numeric values 1, 2 and 3 but it means group 1, group 2 and group 3 therefore it makes no sense in calculating the mean. Character variable cannot be even be turned into numeric, therefore it doesn't have a mean.
